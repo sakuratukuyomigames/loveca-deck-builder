@@ -86,6 +86,7 @@ def main():
             print("API preview:", data[:500].decode("utf-8", errors="replace"))
             print("JSON KEYS:", list(json.loads(data).keys()))
             print("CARD FIELDS:", list(json.loads(data)["items"][0].keys()))
+            print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
             print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
             print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
