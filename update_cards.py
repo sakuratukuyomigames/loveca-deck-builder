@@ -22,7 +22,7 @@ def main():
             print("Page size:", len(html))
             print("Contains cardlist:", "cardlist" in html.lower())
             print("Page preview:", html[:300])            links = re.findall(r'(?:href|src)=["\']([^"\']+)["\']', html)
-            candidates = [
+                        links = re.findall(r'(?:href|src)=["\']([^"\']+)["\']', html)candidates = [
                 link for link in links
                 if any(word in link.lower() for word in
                        ("card", "api", "json", "search"))
