@@ -69,6 +69,22 @@ def main():
             print("FOUND", word, js[max(0, pos-150):pos+350])
     for match in re.finditer(r".{0,120}endpoints.{0,300}", js, re.I):
         print("ENDPOINT DETAIL:", match.group(0)[:420])
+    print("Checking card list API...")
 
+    api_url = "https://llofficial-cardgame.com/card-list-user/list"
+    api_request = Request(
+        api_url,
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
+
+    try:
+        with urlopen(api_request, timeout=20) as response:
+            data = response.read()
+            print("API status:", response.status)
+            print("Content-Type:", response.headers.get("Content-Type"))
+            print("API response size:", len(data))
+            print("API preview:", data[:500].decode("utf-8", errors="replace"))
+    except Exception as error:
+        print("API check error:", type(error).__name__, str(error))
 if __name__ == "__main__":
     main()
