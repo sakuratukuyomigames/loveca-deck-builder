@@ -69,7 +69,7 @@ def main():
             print("FOUND", word, js[max(0, pos-150):pos+350])
     for match in re.finditer(r".{0,120}endpoints.{0,300}", js, re.I):
         print("ENDPOINT DETAIL:", match.group(0)[:420])
-    print("Checking card list API...")
+    print("Checking card list API TEST...")
 
     api_url = "https://llofficial-cardgame.com/card-list-user/list"
     api_request = Request(
