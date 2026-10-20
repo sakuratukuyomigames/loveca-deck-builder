@@ -63,7 +63,7 @@ def main():
 
         print("JS preview:", js[:1000])
 
-    for word in ("fetch(", "/api/", "endpoint"):
+        for word in ("fetch(", "/api/", "endpoint"):
         pos = js.lower().find(word.lower())
         if pos >= 0:
             print("FOUND", word, js[max(0, pos-250):pos+500])
