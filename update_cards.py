@@ -86,6 +86,7 @@ def main():
             print("API preview:", data[:500].decode("utf-8", errors="replace"))
             print("JSON KEYS:", list(json.loads(data).keys()))
             print("CARD FIELDS:", list(json.loads(data)["items"][0].keys()))
+            print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
             print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
         print("API check error:", type(error).__name__, str(error))
