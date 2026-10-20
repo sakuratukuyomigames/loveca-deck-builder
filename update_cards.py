@@ -36,8 +36,8 @@ def main():
         "Candidate links:",
         json.dumps(candidates[:30], ensure_ascii=False)
     )
-        for link in links:
-            if "bushiroad-card-manager" in link and ".js" in link:
-                print("CARD SCRIPT:", link)
+     for link in links:
+        if "bushiroad-card-manager" in link and ".js" in link:
+            print("CARD SCRIPT:", link)
 if __name__ == "__main__":
     main()
