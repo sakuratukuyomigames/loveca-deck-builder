@@ -61,7 +61,7 @@ def main():
     for word in ("ajax", "api", "fetch", "admin-ajax", "wp-json"):
         print(word, "found:", word in js.lower())
 
-        print("JS preview:", js[:1000])
+    print("JS preview:", js[:1000])
 
     for word in ("endpoints", "card_list", "cardlist"):
         pos = js.lower().find(word.lower())
