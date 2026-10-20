@@ -39,5 +39,28 @@ def main():
     for link in links:
         if "bushiroad-card-manager" in link and ".js" in link:
             print("CARD SCRIPT:", link)
+            
+    print("Checking card list JavaScript...")
+
+    js_url = (
+        "https://llofficial-cardgame.com/wordpress/"
+        "wp-content/plugins/bushiroad-card-manager/"
+        "assets/sys.cardlist.js"
+    )
+
+    js_request = Request(
+        js_url,
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
+
+    with urlopen(js_request, timeout=20) as response:
+        js = response.read().decode("utf-8", errors="replace")
+
+    print("JS size:", len(js))
+
+    for word in ("ajax", "api", "fetch", "admin-ajax", "wp-json"):
+        print(word, "found:", word in js.lower())
+
+    print("JS preview:", js[:1000])
 if __name__ == "__main__":
     main()
