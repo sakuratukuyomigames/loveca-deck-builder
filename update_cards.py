@@ -71,7 +71,7 @@ def main():
         print("ENDPOINT DETAIL:", match.group(0)[:420])
     print("Checking card list API TEST...")
 
-    api_url = "https://llofficial-cardgame.com/card-list-user/list"
+    api_url = "https://llofficial-cardgame.com/cardlist/searchresults/?view=text"
     api_request = Request(
         api_url,
         headers={"User-Agent": "Mozilla/5.0"}
