@@ -17,7 +17,7 @@ def main():
         html = response.read().decode("utf-8", errors="replace")
         print("HTTP status:", response.status)
         print("Page size:", len(html))
-
+    print("HTML API PATHS:", sorted(set(re.findall(r'[^"\'\s<>]*card-list-user[^"\'\s<>]*', html))))
     links = re.findall(
         r"""(?:href|src)=["']([^"']+)["']""",
         html
