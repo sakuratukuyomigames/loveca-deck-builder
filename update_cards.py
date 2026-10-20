@@ -22,12 +22,15 @@ def main():
             print("Page size:", len(html))
             print("Contains cardlist:", "cardlist" in html.lower())
             print("Page preview:", html[:300])            links = re.findall(r'(?:href|src)=["\']([^"\']+)["\']', html)
-                        links = re.findall(r'(?:href|src)=["\']([^"\']+)["\']', html)candidates = [
-                            candidates = [link for link in links
+            
+            links = re.findall(r'''(?:href|src)=["']([^"']+)["']''', html)
+            candidates = [
+                link for link in links
                 if any(word in link.lower() for word in
                        ("card", "api", "json", "search"))
             ]
             print("Candidate links:", json.dumps(candidates[:30], ensure_ascii=False))
+
 
     except (HTTPError, URLError, TimeoutError) as error:
         print("Connection failed:", error)
