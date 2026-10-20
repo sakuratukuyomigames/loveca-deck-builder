@@ -84,6 +84,7 @@ def main():
             print("Content-Type:", response.headers.get("Content-Type"))
             print("API response size:", len(data))
             print("API preview:", data[:500].decode("utf-8", errors="replace"))
+            print("JSON KEYS:", list(json.loads(data).keys()))
             print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
         print("API check error:", type(error).__name__, str(error))
