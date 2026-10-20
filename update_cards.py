@@ -61,10 +61,13 @@ def main():
     for word in ("ajax", "api", "fetch", "admin-ajax", "wp-json"):
         print(word, "found:", word in js.lower())
 
-    print("JS preview:", js[:1000])
-        for word in ("fetch(", "/api/", "endpoint"):
+        print("JS preview:", js[:1000])
+
+    for word in ("fetch(", "/api/", "endpoint"):
         pos = js.lower().find(word.lower())
         if pos >= 0:
             print("FOUND", word, js[max(0, pos-250):pos+500])
+
+
 if __name__ == "__main__":
     main()
