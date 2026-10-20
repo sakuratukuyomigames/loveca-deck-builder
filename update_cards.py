@@ -63,7 +63,7 @@ def main():
 
         print("JS preview:", js[:1000])
 
-            for word in ("endpoints", "card_list", "cardlist"):
+    for word in ("endpoints", "card_list", "cardlist"):
         pos = js.lower().find(word.lower())
         if pos >= 0:
             print("FOUND", word, js[max(0, pos-150):pos+350])
