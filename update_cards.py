@@ -88,17 +88,17 @@ def main():
             print("CARD FIELDS:", list(json.loads(data)["items"][0].keys()))
             all_cards = []
             for page in range(1, 180):
-            page_url = f"https://llofficial-cardgame.com/manage/card-list-user/list?page={page}"
-            page_request = Request(page_url, headers={"User-Agent": "Mozilla/5.0"})
-            with urlopen(page_request, timeout=20) as page_response:
-                page_data = json.load(page_response)
-            all_cards.extend(page_data["items"])
-            print(f"Page {page}/179: {len(all_cards)} cards")
+                page_url = f"https://llofficial-cardgame.com/manage/card-list-user/list?page={page}"
+                page_request = Request(page_url, headers={"User-Agent": "Mozilla/5.0"})
+                with urlopen(page_request, timeout=20) as page_response:
+                    page_data = json.load(page_response)
+                all_cards.extend(page_data["items"])
+                print(f"Page {page}/179: {len(all_cards)} cards")
 
-        print("TOTAL CARDS FETCHED:", len(all_cards))
-        print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
-        print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
-        print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
+            print("TOTAL CARDS FETCHED:", len(all_cards))
+            print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
+            print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
+            print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
         print("API check error:", type(error).__name__, str(error))
 if __name__ == "__main__":
