@@ -3,7 +3,8 @@ import re
 import json
 import os
 from urllib.request import Request, urlopen
-
+import time
+from urllib.error import HTTPError
 URL = "https://llofficial-cardgame.com/cardlist/"
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -16,7 +17,17 @@ def main():
         headers={"User-Agent": "Mozilla/5.0"}
     )
 
-    with urlopen(request, timeout=20) as response:
+         for attempt in range(3):
+        try:
+            response = urlopen(request, timeout=20)
+            break
+        except HTTPError as error:
+            if error.code != 503 or attempt == 2:
+                raise
+            print("HTTP 503: 30秒待って再試行します")
+            time.sleep(30)
+        with response:
+    
         html = response.read().decode("utf-8", errors="replace")
         print("HTTP status:", response.status)
         print("Page size:", len(html))
