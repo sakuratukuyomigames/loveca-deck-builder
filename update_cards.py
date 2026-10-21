@@ -137,6 +137,8 @@ def main():
                     print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
                     print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
+                if hasattr(error, "read"):
+            print("ERROR DETAILS:", error.read().decode("utf-8"))
         print("API check error:", type(error).__name__, str(error))
 if __name__ == "__main__":
     main()
