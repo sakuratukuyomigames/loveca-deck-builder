@@ -112,9 +112,27 @@ def main():
                 "cost": int(sample["cost"]) if str(sample.get("cost", "")).isdigit() else None,
             }
             print("CONVERTED CARD:", json.dumps(converted, ensure_ascii=False))
-            print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
-            print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
-            print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
+            if not SUPABASE_URL or not SUPABASE_KEY:
+                raise ValueError("Supabaseの接続設定がありません")
+
+            save_url = SUPABASE_URL.rstrip("/") + "/rest/v1/cards"
+            save_request = Request(
+            save_url,
+            data=json.dumps(converted, ensure_ascii=False).encode("utf-8"),
+            headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation",
+            },
+            method="POST",
+            )
+            with urlopen(save_request, timeout=30) as save_response:
+                print("SUPABASE SAVE STATUS:", save_response.status)
+                print("SUPABASE SAVE RESULT:", save_response.read().decode("utf-8")[:500])
+                print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
+                print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
+                print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
         print("API check error:", type(error).__name__, str(error))
 if __name__ == "__main__":
