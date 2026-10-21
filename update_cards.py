@@ -96,7 +96,7 @@ def main():
                 print(f"Page {page}/179: {len(all_cards)} cards")
 
             print("TOTAL CARDS FETCHED:", len(all_cards))
-                        sample = all_cards[0]
+            sample = all_cards[0]
             converted = {
                 "card_number": sample.get("card_number"),
                 "name": sample.get("card_name"),
