@@ -96,6 +96,19 @@ def main():
                 print(f"Page {page}/179: {len(all_cards)} cards")
 
             print("TOTAL CARDS FETCHED:", len(all_cards))
+                        sample = all_cards[0]
+            converted = {
+                "card_number": sample.get("card_number"),
+                "name": sample.get("card_name"),
+                "card_type": sample.get("card_kind"),
+                "rarity": sample.get("rare"),
+                "colors": {"raw": sample.get("color")},
+                "hearts": {"raw": sample.get("heart")},
+                "blade_hearts": {"raw": sample.get("attack")},
+                "effect_text": sample.get("text"),
+                "cost": int(sample["cost"]) if str(sample.get("cost", "")).isdigit() else None,
+            }
+            print("CONVERTED CARD:", json.dumps(converted, ensure_ascii=False))
             print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
             print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
             print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
