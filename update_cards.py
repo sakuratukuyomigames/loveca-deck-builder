@@ -117,7 +117,7 @@ def main():
             if not SUPABASE_URL or not SUPABASE_KEY:
                 raise ValueError("Supabaseの接続設定がありません")
 
-            save_url = SUPABASE_URL.rstrip("/") + "/rest/v1/cards"
+            save_url = SUPABASE_URL.rstrip("/") + "/rest/v1/cards?on_conflict=card_number"
             for i in range(0, len(converted_cards), 100):
                 save_request = Request(
                 save_url,
