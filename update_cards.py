@@ -1,9 +1,12 @@
 
 import re
 import json
+import os
 from urllib.request import Request, urlopen
 
 URL = "https://llofficial-cardgame.com/cardlist/"
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
 def main():
     print("Checking official Loveca card list...")
