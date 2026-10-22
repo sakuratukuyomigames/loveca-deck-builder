@@ -26,7 +26,7 @@ def main():
                 raise
             print("HTTP 503: 30秒待って再試行します")
             time.sleep(30)
-     with response:
+    with response:
     
         html = response.read().decode("utf-8", errors="replace")
         print("HTTP status:", response.status)
