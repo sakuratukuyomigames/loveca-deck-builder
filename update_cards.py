@@ -17,7 +17,7 @@ def main():
         headers={"User-Agent": "Mozilla/5.0"}
     )
 
-         for attempt in range(3):
+    for attempt in range(3):
         try:
             response = urlopen(request, timeout=20)
             break
@@ -26,7 +26,7 @@ def main():
                 raise
             print("HTTP 503: 30秒待って再試行します")
             time.sleep(30)
-        with response:
+     with response:
     
         html = response.read().decode("utf-8", errors="replace")
         print("HTTP status:", response.status)
