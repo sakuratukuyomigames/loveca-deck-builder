@@ -117,6 +117,7 @@ def main():
                 "name": sample.get("card_name"),
                 "card_type": sample.get("card_kind"),
                 "rarity": sample.get("rare"),
+                "image_url": sample.get("picture"),
                 "colors": {"raw": sample.get("color")},
                 "hearts": {"raw": sample.get("heart")},
                 "blade_hearts": {"raw": sample.get("attack")},
