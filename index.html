@@ -110,7 +110,16 @@
         details.textContent =
           `コスト: ${card.cost ?? "-"} / レアリティ: ${card.rarity || "-"}`;
 
-        element.append(number, name, details);
+        const image = document.createElement("img");
+        image.src = "https://llofficial-cardgame.com/wordpress/wp-content/images/cardlist/" + card.image_url;
+        image.alt = card.name || "カード画像";
+        image.style.width = "100%";
+        image.style.height = "auto";
+        image.style.borderRadius = "8px";
+        image.style.display = "block";
+        image.style.marginBottom = "8px";
+
+        element.append(image, number, name, details);
         container.append(element);
       }
     }
