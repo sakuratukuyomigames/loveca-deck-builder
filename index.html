@@ -77,7 +77,21 @@
     const SUPABASE_ANON_KEY = "sb_publishable_CNjmZrO04cmLcyHjzW8XmQ_eM-Bs1xv";
 
     let allCards = [];
+let deck = [];
 
+function addToDeck(card) {
+  const count = deck.filter(
+    c => c.card_number === card.card_number
+  ).length;
+
+  if (count >= 4) {
+    alert("同じカードは4枚までです");
+    return;
+  }
+
+  deck.push(card);
+  alert(`${card.name}を追加しました！ 現在${deck.length}枚`);
+}
     function renderCards() {
       const keyword = document.getElementById("search")
         .value.trim().toLowerCase();
@@ -96,7 +110,9 @@
       for (const card of filtered.slice(0, 100)) {
         const element = document.createElement("div");
         element.className = "card";
-
+element.addEventListener("click", () => {
+  addToDeck(card);
+});
         const number = document.createElement("div");
         number.className = "number";
         number.textContent = card.card_number || "";
