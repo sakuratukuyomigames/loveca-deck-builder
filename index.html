@@ -86,6 +86,22 @@
     let allCards = [];
 let deck = [];
 
+function saveDeck() {
+  localStorage.setItem(
+    "loveca-deck",
+    JSON.stringify(deck)
+  );
+}
+
+function loadDeck() {
+  try {
+    const saved = localStorage.getItem("loveca-deck");
+    deck = saved ? JSON.parse(saved) : [];
+  } catch (error) {
+    deck = [];
+  }
+}
+
 function addToDeck(card) {
   const count = deck.filter(
     c => c.card_number === card.card_number
@@ -98,6 +114,7 @@ function addToDeck(card) {
 
   
 deck.push(card);
+saveDeck();
 renderDeck();
 }
 
@@ -146,6 +163,7 @@ removeButton.addEventListener("click", () => {
 
   if (index !== -1) {
     deck.splice(index, 1);
+    saveDeck();
     renderDeck();
   }
 });
@@ -247,7 +265,8 @@ element.addEventListener("click", () => {
 
     document.getElementById("search")
       .addEventListener("input", renderCards);
-
+    loadDeck();
+    renderDeck();
     loadCards();
   </script>
 </body>
