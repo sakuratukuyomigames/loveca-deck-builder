@@ -96,9 +96,11 @@ function addToDeck(card) {
     return;
   }
 
-  deck.push(card);
-  alert(`${card.name}を追加しました！ 現在${deck.length}枚`);
+  
+deck.push(card);
+renderDeck();
 }
+
     function renderCards() {
       const keyword = document.getElementById("search")
         .value.trim().toLowerCase();
