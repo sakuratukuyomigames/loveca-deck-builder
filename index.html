@@ -83,7 +83,8 @@
     <option value="">保存したデッキを選択</option>
   </select>
   <button id="load-named-deck">読み込む</button>
-</div>
+  <button id="delete-named-deck">デッキを削除</button>
+  </div>
 
 <section id="deck-section">
   <h2>現在のデッキ（0枚）</h2>
@@ -357,7 +358,26 @@ document.getElementById("load-named-deck").addEventListener("click", () => {
   localStorage.setItem("loveca-deck-name", name);
   renderDeck();
 });
+document.getElementById("delete-named-deck").addEventListener("click", () => {
+  const select = document.getElementById("saved-decks");
+  const name = select.value;
+  const decks = getNamedDecks();
 
+  if (!name || !Object.prototype.hasOwnProperty.call(decks, name)) {
+    alert("削除するデッキを選択してください");
+    return;
+  }
+
+  if (!confirm(`「${name}」を削除しますか？`)) {
+    return;
+  }
+
+  delete decks[name];
+  localStorage.setItem("loveca-named-decks", JSON.stringify(decks));
+  refreshSavedDecks();
+  select.value = "";
+  alert(`「${name}」を削除しました`);
+});
 refreshSavedDecks();
 
 deckNameInput.addEventListener("input", () => {
