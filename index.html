@@ -84,6 +84,7 @@
   </select>
   <button id="load-named-deck">読み込む</button>
   <button id="delete-named-deck">デッキを削除</button>
+  <button id="duplicate-deck">デッキを複製</button>
   </div>
 
 <section id="deck-section">
@@ -385,6 +386,43 @@ deckNameInput.addEventListener("input", () => {
     "loveca-deck-name",
     deckNameInput.value
   );
+});
+
+document.getElementById("duplicate-deck").addEventListener("click", () => {
+  const originalName = deckNameInput.value.trim();
+
+  if (!originalName) {
+    alert("先にデッキ名を入力してください");
+    return;
+  }
+
+  const decks = getNamedDecks();
+  const newName = prompt("複製先のデッキ名", originalName + " コピー");
+
+  if (newName === null) return;
+
+  const name = newName.trim();
+
+  if (!name) {
+    alert("デッキ名を入力してください");
+    return;
+  }
+
+  if (Object.prototype.hasOwnProperty.call(decks, name)) {
+    alert("同じ名前のデッキが既にあります");
+    return;
+  }
+
+  decks[name] = structuredClone(deck);
+  localStorage.setItem("loveca-named-decks", JSON.stringify(decks));
+
+  deckNameInput.value = name;
+  localStorage.setItem("loveca-deck-name", name);
+
+  refreshSavedDecks();
+  document.getElementById("saved-decks").value = name;
+
+  alert("デッキを複製しました");
 });
 
     loadCards();
