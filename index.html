@@ -290,6 +290,76 @@ const deckNameInput = document.getElementById("deck-name");
 deckNameInput.value =
   localStorage.getItem("loveca-deck-name") || "";
 
+function getNamedDecks() {
+  try {
+    return JSON.parse(
+      localStorage.getItem("loveca-named-decks") || "{}"
+    );
+  } catch {
+    return {};
+  }
+}
+
+function refreshSavedDecks() {
+  const select = document.getElementById("saved-decks");
+  select.replaceChildren(new Option("保存したデッキを選択", ""));
+
+  for (const name of Object.keys(getNamedDecks())) {
+    select.add(new Option(name, name));
+  }
+}
+
+document.getElementById("save-named-deck").addEventListener("click", () => {
+  const name = deckNameInput.value.trim();
+
+  if (!name) {
+    alert("デッキ名を入力してください");
+    return;
+  }
+
+  const decks = getNamedDecks();
+
+  if (decks[name] && !confirm("同名デッキを上書きしますか？")) {
+    return;
+  }
+
+  decks[name] = deck;
+  localStorage.setItem("loveca-named-decks", JSON.stringify(decks));
+  refreshSavedDecks();
+  document.getElementById("saved-decks").value = name;
+  alert("デッキを保存しました");
+});
+
+document.getElementById("new-deck").addEventListener("click", () => {
+  if (!confirm("新規デッキを作成しますか？未保存の変更は失われます。")) {
+    return;
+  }
+
+  deck = [];
+  deckNameInput.value = "";
+  saveDeck();
+  localStorage.setItem("loveca-deck-name", "");
+  renderDeck();
+});
+
+document.getElementById("load-named-deck").addEventListener("click", () => {
+  const name = document.getElementById("saved-decks").value;
+  const decks = getNamedDecks();
+
+  if (!name || !decks[name]) {
+    alert("保存したデッキを選択してください");
+    return;
+  }
+
+  deck = structuredClone(decks[name]);
+  deckNameInput.value = name;
+  saveDeck();
+  localStorage.setItem("loveca-deck-name", name);
+  renderDeck();
+});
+
+refreshSavedDecks();
+
 deckNameInput.addEventListener("input", () => {
   localStorage.setItem(
     "loveca-deck-name",
