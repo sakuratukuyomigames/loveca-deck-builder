@@ -120,9 +120,29 @@ function renderDeck() {
 
   for (const { card, count } of counts.values()) {
     const item = document.createElement("div");
-    item.textContent = `${card.name} × ${count}枚`;
-    item.style.padding = "8px 0";
-    list.append(item);
+    
+item.textContent = `${card.name} × ${count}枚 `;
+item.style.padding = "8px 0";
+
+const removeButton = document.createElement("button");
+removeButton.textContent = "− 1枚";
+removeButton.style.marginLeft = "12px";
+removeButton.style.padding = "6px 12px";
+
+removeButton.addEventListener("click", () => {
+  const index = deck.findIndex(
+    c => c.card_number === card.card_number
+  );
+
+  if (index !== -1) {
+    deck.splice(index, 1);
+    renderDeck();
+  }
+});
+
+item.append(removeButton);
+list.append(item);
+
   }
 }
 
