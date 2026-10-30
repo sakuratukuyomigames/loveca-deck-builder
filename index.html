@@ -101,6 +101,31 @@ deck.push(card);
 renderDeck();
 }
 
+function renderDeck() {
+  const list = document.getElementById("deck-list");
+  const title = document.querySelector("#deck-section h2");
+
+  title.textContent = `現在のデッキ（${deck.length}枚）`;
+  list.replaceChildren();
+
+  const counts = new Map();
+
+  for (const card of deck) {
+    const key = card.card_number;
+    if (!counts.has(key)) {
+      counts.set(key, { card, count: 0 });
+    }
+    counts.get(key).count++;
+  }
+
+  for (const { card, count } of counts.values()) {
+    const item = document.createElement("div");
+    item.textContent = `${card.name} × ${count}枚`;
+    item.style.padding = "8px 0";
+    list.append(item);
+  }
+}
+
     function renderCards() {
       const keyword = document.getElementById("search")
         .value.trim().toLowerCase();
