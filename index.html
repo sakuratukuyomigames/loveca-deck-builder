@@ -275,6 +275,19 @@ element.addEventListener("click", () => {
       .addEventListener("input", renderCards);
     loadDeck();
     renderDeck();
+    
+const deckNameInput = document.getElementById("deck-name");
+
+deckNameInput.value =
+  localStorage.getItem("loveca-deck-name") || "";
+
+deckNameInput.addEventListener("input", () => {
+  localStorage.setItem(
+    "loveca-deck-name",
+    deckNameInput.value
+  );
+});
+
     loadCards();
   </script>
 </body>
