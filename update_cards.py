@@ -117,8 +117,8 @@ def main():
                        "blade": card.get("blade"),
                        "heart": card.get("heart"),
                        "attack": card.get("attack")
-        }, ensure_ascii=False))
-        break
+                    }, ensure_ascii=False))
+                break
             converted_cards = []
             for sample in all_cards:
                 converted = {
