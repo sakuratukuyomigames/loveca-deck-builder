@@ -130,7 +130,7 @@ def main():
                 "colors": {"raw": sample.get("color")},
                 "hearts": {"raw": sample.get("heart")},
                 "blade_hearts": {"raw": sample.get("attack")},
-                "blade": int(sample["blade"]) if str(sample.get("blade", "")).isdigit() else None,
+                "blade": int(sample["attack"]) if str(sample.get("attack", "")).isdigit() else None,
                 "effect_text": sample.get("text"),
                 "cost": int(sample["cost"]) if str(sample.get("cost", "")).isdigit() else None,
                  }
