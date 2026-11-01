@@ -115,6 +115,7 @@ def main():
                    print("MEMBER BLADE CHECK:", json.dumps({
                        "name": card.get("card_name"),
                        "blade": card.get("blade"),
+                        "power": card.get("power"),
                        "heart": card.get("heart"),
                        "attack": card.get("attack")
                     }, ensure_ascii=False))
