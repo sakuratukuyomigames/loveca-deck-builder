@@ -111,7 +111,7 @@ def main():
 
             print("TOTAL CARDS FETCHED:", len(all_cards))
             for card in all_cards:
-                if card.get("card_kind") == "メンバー" and str(card.get("attack", "")).isdigit() and int(card["attack"]) >= 3:
+                if card.get("card_kind") == "メンバー":
                    print("MEMBER BLADE CHECK:", json.dumps({
                        "name": card.get("card_name"),
                        "blade": card.get("blade"),
