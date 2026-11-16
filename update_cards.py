@@ -101,7 +101,7 @@ def main():
             print("JSON KEYS:", list(json.loads(data).keys()))
             print("CARD FIELDS:", list(json.loads(data)["items"][0].keys()))
             all_cards = []
-            for page in range(1, 180):
+            for page in range(1, 194):
                 page_url = f"https://llofficial-cardgame.com/manage/card-list-user/list?page={page}"
                 page_request = Request(page_url, headers={"User-Agent": "Mozilla/5.0"})
                 with urlopen(page_request, timeout=20) as page_response:
