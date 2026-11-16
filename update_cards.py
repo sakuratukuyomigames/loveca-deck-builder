@@ -100,14 +100,15 @@ def main():
             print("API preview:", data[:500].decode("utf-8", errors="replace"))
             print("JSON KEYS:", list(json.loads(data).keys()))
             print("CARD FIELDS:", list(json.loads(data)["items"][0].keys()))
-            all_cards = []
-            for page in range(1, 194):
+            total_pages = (json.loads(data)["total"] + 14) // 15
+　　　　　　　　all_cards = []
+            for page in range(1, total_pages + 1):
                 page_url = f"https://llofficial-cardgame.com/manage/card-list-user/list?page={page}"
                 page_request = Request(page_url, headers={"User-Agent": "Mozilla/5.0"})
                 with urlopen(page_request, timeout=20) as page_response:
                     page_data = json.load(page_response)
-                all_cards.extend(page_data["items"])
-                print(f"Page {page}/179: {len(all_cards)} cards")
+                    all_cards.extend(page_data["items"])
+                    print(f"Page {page}/{total_pages}: {len(all_cards)} cards")
 
             print("TOTAL CARDS FETCHED:", len(all_cards))
             for card in all_cards:
