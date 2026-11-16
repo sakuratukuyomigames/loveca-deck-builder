@@ -93,6 +93,31 @@
 </section>
 <hr>
 
+<select id="cost-filter">
+  <option value="">すべてのコスト</option>
+  <option value="0">0コスト</option>
+  <option value="1">1コスト</option>
+  <option value="2">2コスト</option>
+  <option value="3">3コスト</option>
+  <option value="4">4コスト</option>
+  <option value="5">5コスト</option>
+  <option value="6">6コスト</option>
+  <option value="7">7コスト</option>
+  <option value="8">8コスト</option>
+  <option value="9">9コスト</option>
+  <option value="10">10コスト</option>
+  <option value="11">11コスト</option>
+  <option value="12">12コスト</option>
+  <option value="13">13コスト</option>
+  <option value="14">14コスト</option>
+  <option value="15">15コスト</option>
+  <option value="16">16コスト</option>
+  <option value="17">17コスト</option>
+  <option value="18">18コスト</option>
+  <option value="19">19コスト</option>
+  <option value="20">20コスト</option>
+</select>
+
     <input id="search" placeholder="カード名・カード番号で検索">
     <div id="status">カードデータの接続設定待ち</div>
     <div id="cards"></div>
@@ -195,12 +220,26 @@ list.append(item);
 
     function renderCards() {
       const keyword = document.getElementById("search")
-        .value.trim().toLowerCase();
+  .value.trim().toLowerCase();
+      
+const selectedCost = document.getElementById("cost-filter").value;
 
-      const filtered = allCards.filter(card =>
-        String(card.name || "").toLowerCase().includes(keyword) ||
-        String(card.card_number || "").toLowerCase().includes(keyword)
-      );
+      
+const filtered = allCards.filter(card => {
+  const matchesKeyword =
+    String(card.name || "").toLowerCase().includes(keyword) ||
+    String(card.card_number || "").toLowerCase().includes(keyword);
+
+  const matchesCost =
+    selectedCost === "" ||
+    (card.cost !== null &&
+      card.cost !== undefined &&
+      card.cost !== "" &&
+      Number(card.cost) === Number(selectedCost));
+
+  return matchesKeyword && matchesCost;
+});
+
 
       document.getElementById("status").textContent =
         `${filtered.length}枚のカード`;
@@ -278,12 +317,17 @@ element.addEventListener("click", () => {
         renderCards();
       } catch (error) {
         document.getElementById("status").textContent =
+        document.getElementById("cost-filter").addEventListener("change", renderCards);
+
           "読み込みエラー: " + error.message;
       }
     }
 
     document.getElementById("search")
       .addEventListener("input", renderCards);
+    
+document.getElementById("cost-filter").addEventListener("change", renderCards);
+
     loadDeck();
     renderDeck();
     
