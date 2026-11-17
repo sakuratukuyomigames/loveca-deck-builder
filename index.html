@@ -133,6 +133,17 @@
   <option value="10">10ブレード</option>
 </select>
 
+<select id="heart-filter">
+  <option value="">すべてのハート</option>
+  <option value="赤">赤ハート</option>
+  <option value="黄">黄ハート</option>
+  <option value="緑">緑ハート</option>
+  <option value="青">青ハート</option>
+  <option value="紫">紫ハート</option>
+  <option value="桃">桃ハート</option>
+  <option value="ALL">ALLハート</option>
+</select>
+
     <input id="search" placeholder="カード名・カード番号で検索">
     <div id="status">カードデータの接続設定待ち</div>
     <div id="cards"></div>
@@ -241,7 +252,8 @@ const selectedCost = document.getElementById("cost-filter").value;
 
 const selectedBlade = document.getElementById("blade-filter").value;
 
-      
+ const selectedHeart =
+  document.getElementById("heart-filter").value;
 const filtered = allCards.filter(card => {
   const matchesKeyword =
     String(card.name || "").toLowerCase().includes(keyword) ||
@@ -261,7 +273,10 @@ const matchesBlade =
    card.blade !== undefined &&
    card.blade !== "" &&
    Number(card.blade) === Number(selectedBlade));
-return matchesKeyword && matchesCost && matchesBlade;
+  const matchesHeart =
+  selectedHeart === "" ||
+  String(card.hearts?.raw || "").includes(selectedHeart);
+return matchesKeyword && matchesCost && matchesBlade && matchesHeart;
 });
 
 
@@ -318,7 +333,7 @@ element.addEventListener("click", () => {
 
         while (true) {
           const response = await fetch(
-  `${SUPABASE_URL}/rest/v1/cards?select=card_number,name,cost,rarity,image_url,blade&order=id.asc&limit=${pageSize}&offset=${offset}`,
+  `${SUPABASE_URL}/rest/v1/cards?select=card_number,name,cost,rarity,image_url,blade,hearts&order=id.asc&limit=${pageSize}&offset=${offset}`,
   {
     headers: {
       apikey: SUPABASE_ANON_KEY,
@@ -354,7 +369,8 @@ document.getElementById("cost-filter").addEventListener("change", renderCards);
 
 document.getElementById("blade-filter")
   .addEventListener("change", renderCards);
-
+document.getElementById("heart-filter")
+  .addEventListener("change", renderCards);
     loadDeck();
     renderDeck();
     
