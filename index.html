@@ -318,7 +318,7 @@ element.addEventListener("click", () => {
 
         while (true) {
           const response = await fetch(
-            `${SUPABASE_URL}/rest/v1/cards?select=card_number,name,cost,rarity,image_url&order=id.asc&limit=${pageSize}&offset=${offset}`,
+            select=card_number,name,cost,rarity,image_url,blade
             {
               headers: {
                 apikey: SUPABASE_ANON_KEY,
