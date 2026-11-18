@@ -279,7 +279,9 @@ const filtered = allCards.filter(card => {
   
 const matchesKind =
   selectedKind === "" ||
-  String(card.card_kind || "") === selectedKind;
+  
+String(card.card_kind || "").includes(selectedKind);
+
 
   const matchesKeyword =
     String(card.name || "").toLowerCase().includes(keyword) ||
