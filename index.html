@@ -263,6 +263,10 @@ const selectedBlade = document.getElementById("blade-filter").value;
 
  const selectedHeart =
   document.getElementById("heart-filter").value;
+  
+const selectedHeartCount =
+  Number(document.getElementById("heart-count-filter").value);
+
 const filtered = allCards.filter(card => {
   const matchesKeyword =
     String(card.name || "").toLowerCase().includes(keyword) ||
@@ -276,15 +280,25 @@ const filtered = allCards.filter(card => {
       Number(card.cost) === Number(selectedCost));
 
   
-const matchesBlade =
-  selectedBlade === "" ||
-  (card.blade !== null &&
-   card.blade !== undefined &&
-   card.blade !== "" &&
-   Number(card.blade) === Number(selectedBlade));
-  const matchesHeart =
-  selectedHeart === "" ||
-  String(card.hearts?.raw || "").includes(selectedHeart);
+
+const matchesHeart = (() => {
+  if (selectedHeart === "") return true;
+
+  const raw = String(card.hearts?.raw || "");
+  const pattern = new RegExp(
+    selectedHeart === "ALL" ? "ALL(\\d*)" : selectedHeart + "(\\d*)",
+    "g"
+  );
+
+  let count = 0;
+  for (const match of raw.matchAll(pattern)) {
+    count += match[1] === "" ? 1 : Number(match[1]);
+  }
+
+  return count >= selectedHeartCount;
+})();
+
+  
 return matchesKeyword && matchesCost && matchesBlade && matchesHeart;
 });
 
