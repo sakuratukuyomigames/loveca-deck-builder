@@ -279,7 +279,12 @@ const filtered = allCards.filter(card => {
       card.cost !== "" &&
       Number(card.cost) === Number(selectedCost));
 
-  
+  const matchesBlade =
+  selectedBlade === "" ||
+  (card.blade !== null &&
+    card.blade !== undefined &&
+    card.blade !== "" &&
+    Number(card.blade) === Number(selectedBlade));
 
 const matchesHeart = (() => {
   if (selectedHeart === "") return true;
