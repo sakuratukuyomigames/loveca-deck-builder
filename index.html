@@ -276,6 +276,11 @@ const selectedHeartCount =
   Number(document.getElementById("heart-count-filter").value);
 
 const filtered = allCards.filter(card => {
+  
+const matchesKind =
+  selectedKind === "" ||
+  String(card.card_kind || "") === selectedKind;
+
   const matchesKeyword =
     String(card.name || "").toLowerCase().includes(keyword) ||
     String(card.card_number || "").toLowerCase().includes(keyword);
@@ -317,7 +322,9 @@ const matchesHeart = (() => {
 })();
 
   
-return matchesKeyword && matchesCost && matchesBlade && matchesHeart;
+
+return matchesKind && matchesKeyword && matchesCost && matchesBlade && matchesHeart;
+
 });
 
 
@@ -556,6 +563,9 @@ document.getElementById("duplicate-deck").addEventListener("click", () => {
     loadCards();
 
 document.getElementById("heart-count-filter").addEventListener("change", renderCards);
+
+document.getElementById("kind-filter").addEventListener("change", renderCards);
+
 </script>
 </body>
 </html>
