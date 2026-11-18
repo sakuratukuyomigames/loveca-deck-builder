@@ -93,6 +93,12 @@
 </section>
 <hr>
 
+<select id="kind-filter">
+  <option value="">すべての種類</option>
+  <option value="メンバー">メンバー</option>
+  <option value="ライブ">ライブ</option>
+</select>
+
 <select id="cost-filter">
   <option value="">すべてのコスト</option>
   <option value="0">0コスト</option>
@@ -257,6 +263,8 @@ list.append(item);
       const keyword = document.getElementById("search")
   .value.trim().toLowerCase();
       
+const selectedKind = document.getElementById("kind-filter").value;
+
 const selectedCost = document.getElementById("cost-filter").value;
 
 const selectedBlade = document.getElementById("blade-filter").value;
