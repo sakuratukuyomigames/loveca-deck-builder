@@ -286,18 +286,23 @@ const filtered = allCards.filter(card => {
     card.blade !== "" &&
     Number(card.blade) === Number(selectedBlade));
 
+
 const matchesHeart = (() => {
   if (selectedHeart === "") return true;
 
   const raw = String(card.hearts?.raw || "");
-  const pattern = new RegExp(
-    selectedHeart === "ALL" ? "ALL(\\d*)" : selectedHeart + "(\\d*)",
-    "g"
-  );
+  const parts = raw.match(/ALL\d*|[赤黄緑青紫桃]\d*/g) || [];
 
   let count = 0;
-  for (const match of raw.matchAll(pattern)) {
-    count += match[1] === "" ? 1 : Number(match[1]);
+
+  for (const part of parts) {
+    const color = part.match(/^(ALL|[赤黄緑青紫桃])/)[0];
+    const number = part.slice(color.length);
+    const amount = number === "" ? 1 : Number(number);
+
+    if (color === selectedHeart) {
+      count += amount;
+    }
   }
 
   return count >= selectedHeartCount;
