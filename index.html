@@ -202,13 +202,38 @@ deck.push(card);
 saveDeck();
 renderDeck();
 }
+function renderDeckStats() {
+  const colors = ["赤", "黄", "緑", "青", "紫", "桃"];
+  const counts = Object.fromEntries(
+    colors.map(color => [color, 0])
+  );
 
+  for (const card of deck) {
+    const color = card.colors?.raw || "";
+    if (color in counts) {
+      counts[color]++;
+    }
+  }
+
+  let stats = document.getElementById("deck-stats");
+
+  if (!stats) {
+    stats = document.createElement("div");
+    stats.id = "deck-stats";
+    document.getElementById("deck-list").before(stats);
+  }
+
+  stats.textContent =
+    "色別枚数：" +
+    colors.map(color => `${color} ${counts[color]}枚`).join(" / ");
+}
 function renderDeck() {
   const list = document.getElementById("deck-list");
   const title = document.querySelector("#deck-section h2");
 
-  title.textContent = `現在のデッキ（${deck.length}枚）`;
-  list.replaceChildren();
+  title.textContent = `現在のデッキ (${deck.length}枚)`;
+renderDeckStats();
+list.replaceChildren();
 
   const counts = new Map();
 
