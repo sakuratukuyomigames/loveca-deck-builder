@@ -84,7 +84,8 @@ def main():
     for match in re.finditer(r".{0,120}endpoints.{0,300}", js, re.I):
         print("ENDPOINT DETAIL:", match.group(0)[:420])
     print("Checking card list API TEST...")
-
+    for match in re.finditer(r".{0,200}endpoints\.detail.{0,500}", js):
+        print("DETAIL API CHECK:", match.group(0))
     api_url = "https://llofficial-cardgame.com/manage/card-list-user/list?page=2"
     api_request = Request(
         api_url,
