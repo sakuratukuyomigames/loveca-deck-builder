@@ -111,16 +111,8 @@ def main():
                     print(f"Page {page}/{total_pages}: {len(all_cards)} cards")
 
             print("TOTAL CARDS FETCHED:", len(all_cards))
-            for card in all_cards:
-                if card.get("card_kind") == "メンバー":
-                   print("MEMBER BLADE CHECK:", json.dumps({
-                       "name": card.get("card_name"),
-                       "blade": card.get("blade"),
-                        "power": card.get("power"),
-                       "heart": card.get("heart"),
-                       "attack": card.get("attack")
-                    }, ensure_ascii=False))
-                break
+            for card in all_cards[:5]:
+                print("RAW CARD CHECK:", json.dumps(card, ensure_ascii=False))
             converted_cards = []
             for sample in all_cards:
                 converted = {
