@@ -115,18 +115,27 @@ def main():
             print("TOTAL CARDS FETCHED:", len(all_cards))
             for card in all_cards[:5]:
                 print("RAW CARD CHECK:", json.dumps(card, ensure_ascii=False))
-            test_url = "https://llofficial-cardgame.com/manage/card-list-user/list?" + urlencode({
-            "page": 1,
-            "work_title": "title_1",
-            "unit_name": "Printemps"
-        })
-            test_request = Request(
-            test_url,
-            headers={"User-Agent": "Mozilla/5.0"}
-        )
-            with urlopen(test_request, timeout=20) as test_response:
-                test_data = json.load(test_response)
-            print("UNIT TEST TOTAL:", test_data["total"])
+            unit_ids = set()
+            unit_page = 1
+            while True:
+                unit_url = "https://llofficial-cardgame.com/manage/card-list-user/list?" + urlencode({
+                     "page": unit_page,
+                     "work_title": "title_1",
+                     "unit_name": "Printemps"
+                })
+                unit_request = Request(
+                    unit_url,
+                    headers={"User-Agent": "Mozilla/5.0"}
+                )
+                with urlopen(unit_request, timeout=20) as unit_response:
+                    unit_data = json.load(unit_response)
+                for card in unit_data["items"]:
+                    unit_ids.add(card["id"])
+                if unit_page * unit_data["per_page"] >= unit_data["total"]:
+                    break
+                unit_page += 1
+                time.sleep(0.3)
+            print("PRINTEMPS IDS:", len(unit_ids))
             converted_cards = []
             for sample in all_cards:
                 converted = {
