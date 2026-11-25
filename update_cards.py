@@ -1,4 +1,4 @@
-
+from urllib.parse import urlencode
 import re
 import json
 import os
@@ -115,6 +115,18 @@ def main():
             print("TOTAL CARDS FETCHED:", len(all_cards))
             for card in all_cards[:5]:
                 print("RAW CARD CHECK:", json.dumps(card, ensure_ascii=False))
+            test_url = "https://llofficial-cardgame.com/manage/card-list-user/list?" + urlencode({
+            "page": 1,
+            "work_title": "title_1",
+            "unit_name": "Printemps"
+        })
+            test_request = Request(
+            test_url,
+            headers={"User-Agent": "Mozilla/5.0"}
+        )
+            with urlopen(test_request, timeout=20) as test_response:
+                test_data = json.load(test_response)
+            print("UNIT TEST TOTAL:", test_data["total"])
             converted_cards = []
             for sample in all_cards:
                 converted = {
