@@ -142,6 +142,9 @@ def main():
             ("title_1", "Printemps"),
             ("title_1", "lily white"),
             ("title_1", "BiBi"),
+            ("title_2", "CYaRon!"),
+            ("title_2", "AZALEA"),
+            ("title_2", "Guilty Kiss"),
         ]
 
         unit_map = {}
