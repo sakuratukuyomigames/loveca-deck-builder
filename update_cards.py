@@ -138,22 +138,26 @@ def main():
                     time.sleep(0.3)
                 return unit_ids
 
-            unit_ids = fetch_unit_ids("title_1", "Printemps")
-            print("PRINTEMPS IDS:", len(unit_ids))
-            lily_white_ids = fetch_unit_ids("title_1", "lily white")
-            print("LILY WHITE IDS:", len(lily_white_ids))
-            bibi_ids = fetch_unit_ids("title_1", "BiBi")
-            print("BIBI IDS:", len(bibi_ids))
-            converted_cards = []
-            for sample in all_cards:
-                groups = []
-                if sample["id"] in unit_ids:
-                    groups.append("Printemps")
-                if sample["id"] in lily_white_ids:
-                    groups.append("lily white")
-                if sample["id"] in bibi_ids:
-                    groups.append("BiBi")
-                converted = {
+    units = [
+        ("title_1", "Printemps"),
+        ("title_1", "lily white"),
+        ("title_1", "BiBi"),
+    ]
+
+    unit_map = {}
+
+    for work_title, unit_name in units:
+        ids = fetch_unit_ids(work_title, unit_name)
+        unit_map[unit_name] = ids
+        print(unit_name, "IDS:", len(ids))
+
+    converted_cards = []
+    for sample in all_cards:
+        groups = [
+            name for name, ids in unit_map.items()
+            if sample["id"] in ids
+        ]
+        converted = {
                     "groups": groups,
                 "card_number": sample.get("card_number"),
                 "name": sample.get("card_name"),
