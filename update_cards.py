@@ -138,26 +138,26 @@ def main():
                     time.sleep(0.3)
                 return unit_ids
 
-    units = [
-        ("title_1", "Printemps"),
-        ("title_1", "lily white"),
-        ("title_1", "BiBi"),
-    ]
-
-    unit_map = {}
-
-    for work_title, unit_name in units:
-        ids = fetch_unit_ids(work_title, unit_name)
-        unit_map[unit_name] = ids
-        print(unit_name, "IDS:", len(ids))
-
-    converted_cards = []
-    for sample in all_cards:
-        groups = [
-            name for name, ids in unit_map.items()
-            if sample["id"] in ids
+        units = [
+            ("title_1", "Printemps"),
+            ("title_1", "lily white"),
+            ("title_1", "BiBi"),
         ]
-        converted = {
+
+        unit_map = {}
+
+        for work_title, unit_name in units:
+            ids = fetch_unit_ids(work_title, unit_name)
+            unit_map[unit_name] = ids
+            print(unit_name, "IDS:", len(ids))
+
+        converted_cards = []
+        for sample in all_cards:
+            groups = [
+                name for name, ids in unit_map.items()
+                if sample["id"] in ids
+            ]
+            converted = {
                     "groups": groups,
                 "card_number": sample.get("card_number"),
                 "name": sample.get("card_name"),
@@ -171,33 +171,33 @@ def main():
                 "effect_text": sample.get("text"),
                 "cost": int(sample["cost"]) if str(sample.get("cost", "")).isdigit() else None,
                  }
-                converted_cards.append(converted)
-            print("CONVERTED CARD:", json.dumps(converted, ensure_ascii=False))
-            if not SUPABASE_URL or not SUPABASE_KEY:
-                raise ValueError("Supabaseの接続設定がありません")
+            converted_cards.append(converted)
+        print("CONVERTED CARD:", json.dumps(converted, ensure_ascii=False))
+        if not SUPABASE_URL or not SUPABASE_KEY:
+            raise ValueError("Supabaseの接続設定がありません")
 
-            save_url = SUPABASE_URL.rstrip("/") + "/rest/v1/cards?on_conflict=card_number"
-            for i in range(0, len(converted_cards), 100):
-                save_request = Request(
-                save_url,
-             data=json.dumps(converted_cards[i:i+100], ensure_ascii=False).encode("utf-8"),
-                headers={
-                "apikey": SUPABASE_KEY,
-                "Authorization": "Bearer " + SUPABASE_KEY,
-                "Content-Type": "application/json",
-                "Prefer": "resolution=merge-duplicates,return=representation",
-                },
-                method="POST",
-                )
-                with urlopen(save_request, timeout=30) as save_response:
-                    print("SUPABASE SAVE STATUS:", save_response.status)
-                    print("SUPABASE SAVE RESULT:", save_response.read().decode("utf-8")[:500])
-                    print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
-                    print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
-                    print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
+        save_url = SUPABASE_URL.rstrip("/") + "/rest/v1/cards?on_conflict=card_number"
+        for i in range(0, len(converted_cards), 100):
+            save_request = Request(
+            save_url,
+         data=json.dumps(converted_cards[i:i+100], ensure_ascii=False).encode("utf-8"),
+            headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "resolution=merge-duplicates,return=representation",
+            },
+            method="POST",
+            )
+            with urlopen(save_request, timeout=30) as save_response:
+                print("SUPABASE SAVE STATUS:", save_response.status)
+                print("SUPABASE SAVE RESULT:", save_response.read().decode("utf-8")[:500])
+                print("TOTAL PAGES:", (json.loads(data)["total"] + json.loads(data)["per_page"] - 1) // json.loads(data)["per_page"])
+                print("FIRST CARD:", json.dumps(json.loads(data)["items"][0], ensure_ascii=False))
+                print("CARD NUMBER FOUND:", "PL!-bp3-019-SRL" in data.decode("utf-8", errors="replace"))
     except Exception as error:
-                if hasattr(error, "read"):
-                   print("ERROR DETAILS:", error.read().decode("utf-8"))
-                print("API check error:", type(error).__name__, str(error))
+        if hasattr(error, "read"):
+            print("ERROR DETAILS:", error.read().decode("utf-8"))
+        print("API check error:", type(error).__name__, str(error))
 if __name__ == "__main__":
     main()
