@@ -146,7 +146,15 @@ def main():
             print("BIBI IDS:", len(bibi_ids))
             converted_cards = []
             for sample in all_cards:
+                groups = []
+                if sample["id"] in unit_ids:
+                    groups.append("Printemps")
+                if sample["id"] in lily_white_ids:
+                    groups.append("lily white")
+                if sample["id"] in bibi_ids:
+                    groups.append("BiBi")
                 converted = {
+                    "groups": groups,
                 "card_number": sample.get("card_number"),
                 "name": sample.get("card_name"),
                 "card_type": sample.get("card_kind"),
