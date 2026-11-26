@@ -140,6 +140,10 @@ def main():
 
             unit_ids = fetch_unit_ids("title_1", "Printemps")
             print("PRINTEMPS IDS:", len(unit_ids))
+            lily_white_ids = fetch_unit_ids("title_1", "lily white")
+            print("LILY WHITE IDS:", len(lily_white_ids))
+            bibi_ids = fetch_unit_ids("title_1", "BiBi")
+            print("BIBI IDS:", len(bibi_ids))
             converted_cards = []
             for sample in all_cards:
                 converted = {
