@@ -152,6 +152,10 @@ def main():
             ("title_4", "CatChu!"),
             ("title_4", "KALEIDOSCORE"),
             ("title_4", "5yncri5e!"),
+            ("title_5", "スリーズブーケ"),
+            ("title_5", "DOLLCHESTRA"),
+            ("title_5", "みらくらぱーく！"),
+            ("title_5", "Edel Note"),
         ]
 
         unit_map = {}
