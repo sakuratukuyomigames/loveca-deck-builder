@@ -149,6 +149,9 @@ def main():
             ("title_3", "A・ZU・NA"),
             ("title_3", "QU4RTZ"),
             ("title_3", "R3BIRTH"),
+            ("title_4", "CatChu!"),
+            ("title_4", "KALEIDOSCORE"),
+            ("title_4", "5yncri5e!"),
         ]
 
         unit_map = {}
